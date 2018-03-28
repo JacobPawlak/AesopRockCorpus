@@ -28,6 +28,12 @@ albums = {}
 #whole dictionary that will get turned into a json file
 ARC = {}
 
+#dictionary of words (not the NLTK Token list) this list does not include the part of speech or anything like that, just the word count
+list_of_words = {}
+
+#dictionary of tenkenized words (includes POS, count, and other data?)
+nltk_list_of_words = {}
+
 
 
 ################################ HELPER-FUNCTIONS ################################
