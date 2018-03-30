@@ -47,10 +47,19 @@ def arc_helper_albums():
 
 	return
 
-#Helper function to open the song file and scan inside of it
-def cf_helper_open(song_file):
 
-	print()
+#Helper function to insert the list_of_words into the ARC
+def arc_helper_list_of_words():
+
+	ARC['list_of_words'] = list_of_words
+
+	return
+
+
+#Helper function to insert the nltk_list_lof_words into the ARC
+def arc_helper_nltk_list_of_words():
+
+	ARC['nltk_list_of_words'] = nltk_list_of_words
 
 	return
 
@@ -96,6 +105,13 @@ def clean_files():
 				#add it
 				song_titles.append(file[:-5])
 
+				#break the songs down to tokenized words and add them to the list of words
+				open_file = open(file, 'r')
+				for line in open_file:
+					if line != "\n":
+						print(line)
+				open_file.close()
+
 		#add this album's songs to the albums dict
 		albums[subd] = songs
 		#print(albums)
@@ -109,6 +125,7 @@ def clean_files():
 def fill_list_of_words():
 
 	print()
+	
 
 	return
 
@@ -125,6 +142,8 @@ def fill_nltk_list_of_words():
 def fill_the_arc():
 
 	arc_helper_albums()
+	arc_helper_list_of_words()
+	arc_helper_nltk_list_of_words()
 
 	return
 
