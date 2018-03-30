@@ -7,7 +7,7 @@
 
 
 
-#import nltk
+import nltk
 import os, glob
 
 
@@ -104,6 +104,22 @@ def clean_files():
 		os.chdir("..")
 
 	return
+
+#Function to fill the list_of_words dictionary (this till not split by part of speech, just the tokens
+def fill_list_of_words():
+
+	print()
+
+	return
+
+
+#Function to fill the nltk_list_of_words dictionary, this will tokenize and pic part of speech for each word
+def fill_nltk_list_of_words():
+
+	print()
+
+	return
+
 
 #You know what it is. Fill. The. ARC.
 def fill_the_arc():
