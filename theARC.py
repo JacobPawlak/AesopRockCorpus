@@ -7,8 +7,13 @@
 
 
 
+#get the nltk library
 import nltk
-import os, glob
+#Use OS and glob library to move through the computer's filesystem
+import os
+import glob
+#To convert the ARC dictionary into a JSON object
+import json
 
 
 
@@ -33,6 +38,12 @@ list_of_words = {}
 
 #dictionary of tenkenized words (includes POS, count, and other data?)
 nltk_list_of_words = {}
+
+#dictionary of hapax legomenon, sorted by song/album
+hapax_legomenon = {}
+
+#longest word because Why not, i'm sure it will be interesting.
+longest_word = []
 
 
 
@@ -109,7 +120,34 @@ def clean_files():
 				open_file = open(file, 'r')
 				for line in open_file:
 					if line != "\n":
-						print(line)
+						print(line[:-1])
+						tokens = nltk.word_tokenize(line)
+						tokenss = []
+						print(tokens)
+						print(nltk.pos_tag(tokens))
+						bad_tokens = ['(', ')', '[', ']', '{', '}', '`', '\"']
+						for token in tokens:
+							first_char = token[:1]
+							#print(first_char)
+							while first_char in bad_tokens:
+								#print(token)
+								token = token[1:]
+								first_char = token[:1]
+							tokenss.append(token)
+
+						if "" in tokenss:
+							tokenss.remove("")
+						if '' in tokenss:
+							tokenss.remove('')
+						if "\'\'" in tokenss:
+							tokenss.remove("''")
+						if '\"\"' in tokenss:
+							tokenss.remove('""')
+						print(tokenss)
+						#print()
+						#print()
+						print(nltk.pos_tag(tokenss))
+						
 				open_file.close()
 
 		#add this album's songs to the albums dict
