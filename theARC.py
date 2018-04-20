@@ -42,8 +42,8 @@ nltk_list_of_words = {}
 #dictionary of hapax legomenon, sorted by song/album
 hapax_legomenon = {}
 
-#longest word because Why not, i'm sure it will be interesting.
-longest_word = []
+#longest word(s) because Why not, i'm sure it will be interesting.
+longest_word = {}
 
 
 
@@ -67,12 +67,28 @@ def arc_helper_list_of_words():
 	return
 
 
-#Helper function to insert the nltk_list_lof_words into the ARC
+#Helper function to insert the nltk_list_of_words into the ARC
 def arc_helper_nltk_list_of_words():
 
 	ARC['nltk_list_of_words'] = nltk_list_of_words
 
 	return
+
+
+#Helper function to insert the nltk_list_of_words into the ARC
+def arc_helper_hapax_legomena():
+
+        ARC['hapax_legomena'] = hapax_legomena
+
+        return
+
+
+#Helper function to insert the longest_word dict into the ARC
+def arc_helper_longest_word():
+
+        ARC['longest_word'] = longest_word
+
+        return
 
 
 
@@ -176,12 +192,30 @@ def fill_nltk_list_of_words():
 	return
 
 
+#Function to look through the nltk_list_of_words and pick out the single occurrence words
+def find_hapax_legomena():
+
+	print()
+
+	return
+
+
+#Combs through the nltk_list_of_words and picks out the longest word(s)
+def find_longest_word():
+
+	print()
+
+	return
+
+
 #You know what it is. Fill. The. ARC.
 def fill_the_arc():
 
 	arc_helper_albums()
 	arc_helper_list_of_words()
 	arc_helper_nltk_list_of_words()
+	arc_helper_hapax_legomena()
+	arc_helper_longest_word()
 
 	return
 
