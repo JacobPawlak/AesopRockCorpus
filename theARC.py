@@ -140,10 +140,10 @@ def clean_files():
 						print(line[:-1])
 						tokens = nltk.word_tokenize(line)
 						tokenss = []
-						print("TOKENS")
-						print(tokens)
-						print("TAGGED TOKENS")
-						print(nltk.pos_tag(tokens))
+						#print("TOKENS")
+						#print(tokens)
+						#print("TAGGED TOKENS")
+						#print(nltk.pos_tag(tokens))
 						#starting to clean the unwanted symbols and stuff out
 						bad_tokens = ['(', ')', '[', ']', '{', '}', '`', '\"']
 						for token in tokens:
@@ -156,13 +156,19 @@ def clean_files():
 							tokenss.append(token)
 						#cleaning the empty strings out now with list comprehension
 						tokensss = [t for t in tokenss if t]
+						#getting rid of the other non-empty empty string string
 						tokenssss = [t for t in tokensss if t != "\'\'"]
-						print("CLEANED TOKENSSS")
-						print(tokensss)
-						print("TAGGED TOKENSSS")
-						print(nltk.pos_tag(tokensss))
-						print("TOKENSSSS")
-						print(tokenssss)
+						#all of the following are just for debug
+						#print("CLEANED TOKENSSS")
+						#print(tokensss)
+						#print("TAGGED TOKENSSS")
+						#print(nltk.pos_tag(tokensss))
+						#print("TOKENSSSS")
+						#print(tokenssss)
+						#IMPORTANT: tokenssss is the cleaned list, sorry that you had to read all of the tokenssss variations,
+						#	but you know how Python is with those immutable lists
+						#now to build the part that counts the token occurrences
+						
 
 				open_file.close()
 
