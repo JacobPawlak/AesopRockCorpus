@@ -40,7 +40,7 @@ list_of_words = {}
 nltk_list_of_words = {}
 
 #dictionary of hapax legomenon, sorted by song/album
-hapax_legomenon = {}
+hapax_legomena = {}
 
 #longest word(s) because Why not, i'm sure it will be interesting.
 longest_word = {}
@@ -136,34 +136,34 @@ def clean_files():
 				open_file = open(file, 'r')
 				for line in open_file:
 					if line != "\n":
+						print("LINE")
 						print(line[:-1])
 						tokens = nltk.word_tokenize(line)
 						tokenss = []
+						print("TOKENS")
 						print(tokens)
+						print("TAGGED TOKENS")
 						print(nltk.pos_tag(tokens))
+						#starting to clean the unwanted symbols and stuff out
 						bad_tokens = ['(', ')', '[', ']', '{', '}', '`', '\"']
 						for token in tokens:
+							#look at the first character
 							first_char = token[:1]
-							#print(first_char)
+							#while it is bad, delete it and look at the new first character
 							while first_char in bad_tokens:
-								#print(token)
 								token = token[1:]
 								first_char = token[:1]
 							tokenss.append(token)
+						#cleaning the empty strings out now with list comprehension
+						tokensss = [t for t in tokenss if t]
+						tokenssss = [t for t in tokensss if t != "\'\'"]
+						print("CLEANED TOKENSSS")
+						print(tokensss)
+						print("TAGGED TOKENSSS")
+						print(nltk.pos_tag(tokensss))
+						print("TOKENSSSS")
+						print(tokenssss)
 
-						if "" in tokenss:
-							tokenss.remove("")
-						if '' in tokenss:
-							tokenss.remove('')
-						if "\'\'" in tokenss:
-							tokenss.remove("''")
-						if '\"\"' in tokenss:
-							tokenss.remove('""')
-						print(tokenss)
-						#print()
-						#print()
-						print(nltk.pos_tag(tokenss))
-						
 				open_file.close()
 
 		#add this album's songs to the albums dict
