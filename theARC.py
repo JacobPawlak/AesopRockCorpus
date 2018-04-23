@@ -35,15 +35,27 @@ ARC = {}
 
 #dictionary of words (not the NLTK Token list) this list does not include the part of speech or anything like that, just the word count
 list_of_words = {}
+#{
+#	"word": count, "word": count, etc
+#}
 
 #dictionary of tenkenized words (includes POS, count, and other data?)
 nltk_list_of_words = {}
+#{
+#	"word/pos": {"word": WORD, "pos": POS, "count": count }
+#}
 
 #dictionary of hapax legomenon, sorted by song/album
 hapax_legomena = {}
+#{
+#	"word": "song", "word": "song", etc
+#}
 
 #longest word(s) because Why not, i'm sure it will be interesting.
-longest_word = {}
+global longest_word
+#{
+#	"word": count, "word": count, etc
+#}
 
 
 
@@ -86,7 +98,7 @@ def arc_helper_hapax_legomena():
 #Helper function to insert the longest_word dict into the ARC
 def arc_helper_longest_word():
 
-        ARC['longest_word'] = longest_word
+        ARC['longest_word'] = find_longest_word()
 
         return
 
@@ -136,8 +148,8 @@ def clean_files():
 				open_file = open(file, 'r')
 				for line in open_file:
 					if line != "\n":
-						print("LINE")
-						print(line[:-1])
+						#print("LINE")
+						#print(line[:-1])
 						tokens = nltk.word_tokenize(line)
 						tokenss = []
 						#print("TOKENS")
@@ -165,10 +177,17 @@ def clean_files():
 						#print(nltk.pos_tag(tokensss))
 						#print("TOKENSSSS")
 						#print(tokenssss)
+						#print(nltk.pos_tag(tokenssss))
+
+						cleaned_tokens = tokenssss
+						fill_list_of_words(cleaned_tokens)
+
+						cleaned_tokens_pos = nltk.pos_tag(cleaned_tokens)
+						fill_nltk_list_of_words(cleaned_tokens_pos)
+
 						#IMPORTANT: tokenssss is the cleaned list, sorry that you had to read all of the tokenssss variations,
 						#	but you know how Python is with those immutable lists
-						#now to build the part that counts the token occurrences
-						
+
 
 				open_file.close()
 
@@ -179,21 +198,33 @@ def clean_files():
 		#go up a directory for the loop
 		os.chdir("..")
 
+	os.chdir("..")
+
 	return
 
-#Function to fill the list_of_words dictionary (this till not split by part of speech, just the tokens
-def fill_list_of_words():
 
-	print()
-	
+#Function to fill the list_of_words dictionary (this till not split by part of speech, just the tokens
+def fill_list_of_words(tokens):
+
+	for token in tokens:
+		if token.lower() not in list_of_words.keys():
+			list_of_words[token.lower()] = 1
+		else:
+			list_of_words[token.lower()] += 1
 
 	return
 
 
 #Function to fill the nltk_list_of_words dictionary, this will tokenize and pic part of speech for each word
-def fill_nltk_list_of_words():
+def fill_nltk_list_of_words(tokens):
 
-	print()
+	for token in tokens:
+		temp_dict = { token[0]: token[1]}
+		temp_key = str(token[0]) + "/" + str(token[1])
+		if temp_key not in nltk_list_of_words.keys():
+			nltk_list_of_words[temp_key] = {"word": token[0], "pos": token[1], "count": 1 }
+		else:
+			nltk_list_of_words[temp_key]["count"] += 1
 
 	return
 
@@ -201,7 +232,9 @@ def fill_nltk_list_of_words():
 #Function to look through the nltk_list_of_words and pick out the single occurrence words
 def find_hapax_legomena():
 
-	print()
+	for word in nltk_list_of_words.keys():
+		if nltk_list_of_words[word]["count"] == 1:
+			hapax_legomena[word] = 1
 
 	return
 
@@ -209,9 +242,15 @@ def find_hapax_legomena():
 #Combs through the nltk_list_of_words and picks out the longest word(s)
 def find_longest_word():
 
-	print()
+	longest_word = {"a": 1}
 
-	return
+	for word in list_of_words.keys():
+		if len(word) > len(list(longest_word.keys())[0]):
+			longest_word = { word: list_of_words[word] }
+		elif len(word) == len(list(longest_word.keys())[0]):
+			longest_word[word] = list_of_words[word]
+
+	return longest_word
 
 
 #You know what it is. Fill. The. ARC.
@@ -235,20 +274,24 @@ def main():
 
 	#scan in and clean the files
 	clean_files()
-	print()
-	#print(song_titles)
-	print()
-	#print(len(song_titles))
-	print()
-	#print(album_titles)
-	print()
-	#print(len(album_titles))
-	print()
-
+	find_hapax_legomena()
+	#longest_word = find_longest_word()
 	#fill the ARC, starting with albums
 	fill_the_arc()
-	print()
+	#print out the ARC in dictionary form
 	print("The ARC: \n")
 	print(ARC)
+	print("#Words total")
+	print(len(nltk_list_of_words))
+	print("#Hapax")
+	print(len(hapax_legomena))
+	print("Longest word")
+	print(list(ARC["longest_word"].keys())[0])
+
+	json_file = open("the_ARC.json", 'w')
+	json_file.write(str(ARC))
+	json_file.close()
+
+	#transform the dictionary into the JSON object the_ARC.json
 
 main()

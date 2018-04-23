@@ -1,7 +1,7 @@
 # AesopRockCorpus
 ## Start date: January 25th, 2018
 
-### Topic Approval due: Sunday Feb 18 (DONE)
+### Topic Approval due: Sunday Feb 18 
 ### Information Literacy and Annotated Bibliography due: Sunday March 11th
 ### First Draft of the paper due: Sunday April 1st
 ### Peer Review due: April 16th - 22nd
