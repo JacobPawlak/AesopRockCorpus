@@ -287,7 +287,7 @@ def main():
 	print(len(hapax_legomena))
 	print("Longest word")
 	print(list(ARC["longest_word"].keys())[0])
-
+	
 	json_file = open("the_ARC.json", 'w')
 	json_file.write(str(ARC))
 	json_file.close()
